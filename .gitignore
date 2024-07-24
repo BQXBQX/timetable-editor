@@ -1,0 +1,42 @@
+# Compiled output
+dist/
+build/
+
+# Logs
+logs/
+
+# Node modules
+node_modules/
+
+# IDE and editor files
+.idea/
+.vscode/
+
+# Local configuration files
+.env.local
+.env.development.local
+
+# Browsers list cache
+.browserslistrc
+
+# Babel cache
+.cache/
+
+# Storybook static preview files
+storybook-static/
+
+# Jest snapshots
+__snapshots__/
+
+# CSS and Sass output
+*.css.map
+*.sass-cache/
+
+# Image thumbnails
+*.thumbnails
+
+# Parcel cache
+.parcel-cache/
+
+# Temporary files
+*.tmp
