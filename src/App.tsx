@@ -1,8 +1,12 @@
-import React from 'react';
-import styles from './App.module.css';
+import React from "react";
+import { TimetableEditor } from "./components/timetableEditor";
 
 function App() {
-  return <div className={styles.title}>Hello Mako!</div>;
+  return (
+    <div>
+      <TimetableEditor></TimetableEditor>
+    </div>
+  );
 }
 
 export { App };
