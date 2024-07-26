@@ -46,6 +46,7 @@ export function makeEditable(textNode: Text, stageRef: RefObject<Stage>) {
     }
 
     function handleOutsideClick(e: MouseEvent) {
+      console.log(e.target);
       if (e.target !== textarea) {
         textNode.text(textarea.value);
         removeTextarea();
@@ -65,6 +66,8 @@ export function makeEditable(textNode: Text, stageRef: RefObject<Stage>) {
       }
     });
 
-    // window.addEventListener("click", handleOutsideClick);
+    setTimeout(() => {
+      window.addEventListener("click", handleOutsideClick);
+    });
   });
 }
