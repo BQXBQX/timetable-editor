@@ -4,5 +4,5 @@ body {
 
 @font-face {
   font-family: "noto-sans-sc";
-  src: url("./noto-sans-sc-chinese-simplified-400-normal.woff") format("woff");
+  src: url("../public/noto-sans-sc-chinese-simplified-400-normal.woff") format("woff");
 }
