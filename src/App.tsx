@@ -1,5 +1,6 @@
 import React from "react";
 import { TimetableEditor } from "./components/timetableEditor";
+import "./App.css";
 
 function App() {
   return (

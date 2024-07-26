@@ -5,6 +5,9 @@
     "build": "mako build --mode production && tsc --declaration"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/joy": "5.0.0-beta.48",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
     "konva": "^9.3.14",
