@@ -16,7 +16,7 @@ export const ToolsBar: React.FC<ToolsBarProps> = ({ generateClick }) => {
         fontFamily: "noto-sans-sc",
       }}
     >
-      <h2> 🛠 Tools Bar</h2>
+      <h2> 🛠 Tools Bar (🦟 Double click textarea to change Value)</h2>
       <Button onClick={generateClick} style={{ width: "fit-content" }}>
         ⛰️ Click to generate !!!
       </Button>

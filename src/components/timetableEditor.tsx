@@ -4,6 +4,7 @@ import { Stage } from "konva/lib/Stage";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useEventsList } from "../hooks/useEventsList";
 import { type Event } from "../types/event";
+import { makeEditable } from "../utils/makeEditable";
 import { ToolsBar } from "./toolsBar";
 
 export const TimetableEditor = () => {
@@ -48,10 +49,18 @@ export const TimetableEditor = () => {
   const canvasWidth = useMemo(() => window.innerWidth / 2, []);
 
   const generateCanvas = useCallback(() => {
+    // every generate will clear last generate
+
+    layerRef.current?.destroyChildren();
+
     const eventsList: Event[] = eventsListRef.current;
 
+    const totalGroup = new Konva.Group();
+    const headerGroup = new Konva.Group();
+    const headerTitleGroup = new Konva.Group();
+
     const backImageObj = new Image();
-    backImageObj.onload = function () {
+    backImageObj.onload = function() {
       const back = new Konva.Rect({
         x: 0,
         y: 0,
@@ -63,14 +72,13 @@ export const TimetableEditor = () => {
         fillPatternScaleY: 0.05,
       });
 
-      layerRef.current?.add(back);
-
+      totalGroup.add(back);
       back.zIndex(0);
     };
     backImageObj.src = "./Back.png";
 
     const headerImageObj = new Image();
-    headerImageObj.onload = function () {
+    headerImageObj.onload = function() {
       const aspectRatio =
         headerImageObj.naturalHeight / headerImageObj.naturalWidth;
       const header = new Konva.Image({
@@ -81,9 +89,8 @@ export const TimetableEditor = () => {
         height: canvasWidth * aspectRatio,
       });
 
-      layerRef.current?.add(header);
-
-      header.zIndex(1);
+      headerGroup.add(header);
+      header.zIndex(0);
     };
     headerImageObj.src = "./Header1.png";
 
@@ -92,7 +99,7 @@ export const TimetableEditor = () => {
       .then((loadedFont) => {
         document.fonts.add(loadedFont);
 
-        const title = new Konva.Text({
+        const departmentTitle = new Konva.Text({
           x: canvasWidth * 0.05,
           y: canvasWidth * 0.16,
           fontSize: canvasWidth * 0.1,
@@ -101,9 +108,8 @@ export const TimetableEditor = () => {
           fill: "black",
         });
 
-        layerRef.current?.add(title);
-
-        title.zIndex(2);
+        headerTitleGroup.add(departmentTitle);
+        makeEditable(departmentTitle, stageRef);
       })
       .catch((error) => console.log(error));
 
@@ -112,25 +118,26 @@ export const TimetableEditor = () => {
       .then((loadedFont) => {
         document.fonts.add(loadedFont);
 
-        const title = new Konva.Text({
+        const classTitle = new Konva.Text({
           x: canvasWidth * 0.05,
           y: canvasWidth * 0.28,
           fontSize: canvasWidth * 0.1,
           fontFamily: "noto-sans-sc-bold",
-          lineHeight: canvasWidth * 0.0016,
-          text: "第15周\n授课课表",
+          lineHeight: 1.1,
+          text: "第xx周\n授课课表",
           fill: "black",
         });
 
-        layerRef.current?.add(title);
-
-        title.zIndex(2);
+        headerTitleGroup.add(classTitle);
+        makeEditable(classTitle, stageRef);
       })
       .catch((error) => console.log(error));
 
-    layerRef.current?.batchDraw();
+    headerGroup.add(headerTitleGroup);
+    totalGroup.add(headerGroup);
+    layerRef.current?.add(totalGroup);
 
-    console.log("generate");
+    layerRef.current?.batchDraw();
   }, []);
 
   return (
