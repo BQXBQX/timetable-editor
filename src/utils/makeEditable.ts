@@ -21,7 +21,7 @@ export function makeEditable(textNode: Text, stageRef: RefObject<Stage>) {
     textarea.style.position = "absolute";
     textarea.style.top = textAreaPosition.y + "px";
     textarea.style.left = textAreaPosition.x + "px";
-    textarea.style.width = textNode.width() - textNode.padding() * 2 + "px";
+    textarea.style.width = textNode.width() - textNode.padding() * 2 + 2 + "px";
     textarea.style.height =
       textNode.height() - textNode.padding() * 2 + 5 + "px";
     textarea.style.fontSize = textNode.fontSize() + "px";
