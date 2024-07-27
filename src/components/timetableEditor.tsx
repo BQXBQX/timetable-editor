@@ -9,7 +9,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useGenerateEventItem } from "../hooks/generateEventItem";
+import { generateEvents } from "../hooks/useGenerateEvents";
 import { useEventsList } from "../hooks/useEventsList";
 import { type Event } from "../types/event";
 import { makeEditable } from "../utils/makeEditable";
@@ -62,7 +62,6 @@ export const TimetableEditor = () => {
 
   useEffect(() => {
     // 当 height 发生变化时,自动重新渲染 background
-    console.log("hello");
     const backImageObj = backImageRef.current!;
     const back = new Konva.Rect({
       x: 0,
@@ -85,19 +84,14 @@ export const TimetableEditor = () => {
 
   const generateCanvas = useCallback(() => {
     // every generate will clear last generate
-
     layerRef.current?.destroyChildren();
     stageRef.current?.height(0);
-    setIsHeaderLoad(false);
-
-    const eventsList: Event[] = eventsListRef.current;
 
     totalGroupRef.current = new Konva.Group();
     const headerGroup = new Konva.Group();
     const headerTitleGroup = new Konva.Group();
 
     const headerImageObj = headerImageRef.current!;
-
     const aspectRatio =
       headerImageObj.naturalHeight / headerImageObj.naturalWidth;
     const header = new Konva.Image({
@@ -110,7 +104,6 @@ export const TimetableEditor = () => {
 
     headerGroup.add(header);
     setHeight(stageRef.current!.height() + header.height());
-    setIsHeaderLoad(true);
     stageRef.current?.height(stageRef.current.height() + header.height());
     header.zIndex(0);
 
@@ -146,21 +139,19 @@ export const TimetableEditor = () => {
       })
       .catch((error) => console.log(error));
 
+    const eventsGroup = generateEvents(
+      eventsListRef.current,
+      stageRef,
+      notoSansSfBold,
+      canvasWidth,
+      setHeight,
+    );
+
     headerGroup.add(headerTitleGroup);
     totalGroupRef.current.add(headerGroup);
-    layerRef.current?.add(totalGroupRef.current);
+    layerRef.current?.add(totalGroupRef.current, eventsGroup);
     layerRef.current?.batchDraw();
   }, []);
-
-  const eventsGroupRef = useGenerateEventItem(
-    eventsListRef.current,
-    stageRef,
-    notoSansSfBold,
-    canvasWidth,
-    setHeight,
-    isHeaderLoad,
-    layerRef,
-  );
 
   return (
     <div style={{ display: "flex", flexDirection: "row", width: "100vw" }}>
