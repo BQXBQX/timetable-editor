@@ -163,7 +163,10 @@ export const TimetableEditor = () => {
           backgroundColor: "#c5c5c5",
         }}
       />
-      <MemoToolsBar generateClick={generateCanvas}></MemoToolsBar>
+      <MemoToolsBar
+        generateClick={generateCanvas}
+        setEventsList={setEventsList}
+      ></MemoToolsBar>
     </div>
   );
 };

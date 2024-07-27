@@ -2,9 +2,9 @@ export const transformTime = (startTime: string, endTime: string): string => {
   const startDate: Date = new Date(startTime);
   const endDate: Date = new Date(endTime);
 
-  const startMonth = startDate.getMonth();
+  const startMonth = startDate.getMonth() + 1;
   const startDay = startDate.getDate();
-  const endMonth = endDate.getMonth();
+  const endMonth = endDate.getMonth() + 1;
   const endDay = endDate.getDate();
 
   const startHour = startDate.getHours();
