@@ -13,7 +13,7 @@ import { generateEvents } from "../hooks/useGenerateEvents";
 import { useEventsList } from "../hooks/useEventsList";
 import { type Event } from "../types/event";
 import { makeEditable } from "../utils/makeEditable";
-import { ToolsBar } from "./toolsBar";
+import { MemoToolsBar } from "./toolsBar";
 
 export const TimetableEditor = () => {
   const stageRef = useRef<Stage | null>(null);
@@ -158,9 +158,13 @@ export const TimetableEditor = () => {
       <div id="container" />
       <div
         id="divider"
-        style={{ height: "100vh", width: "1px", backgroundColor: "#c5c5c5" }}
+        style={{
+          height: `${height}px`,
+          width: "1px",
+          backgroundColor: "#c5c5c5",
+        }}
       />
-      <ToolsBar generateClick={generateCanvas}></ToolsBar>
+      <MemoToolsBar generateClick={generateCanvas}></MemoToolsBar>
     </div>
   );
 };

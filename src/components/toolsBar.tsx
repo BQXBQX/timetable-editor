@@ -1,11 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 import Button from "@mui/joy/Button";
 
 interface ToolsBarProps {
   generateClick: () => void;
 }
 
-export const ToolsBar: React.FC<ToolsBarProps> = ({ generateClick }) => {
+const ToolsBar: React.FC<ToolsBarProps> = ({ generateClick }) => {
   return (
     <div
       style={{
@@ -31,3 +31,5 @@ export const ToolsBar: React.FC<ToolsBarProps> = ({ generateClick }) => {
     </div>
   );
 };
+
+export const MemoToolsBar = memo(ToolsBar);
