@@ -9,7 +9,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { generateEvents } from "../hooks/useGenerateEvents";
+import { generateEvents } from "../utils/generateEvents";
 import { useEventsList } from "../hooks/useEventsList";
 import { type Event } from "../types/event";
 import { makeEditable } from "../utils/makeEditable";
@@ -23,7 +23,6 @@ export const TimetableEditor = () => {
   const { eventsList, setEventsList } = useEventsList();
   const [height, setHeight] = useState<Number>(0);
   const totalGroupRef = useRef<Group | null>(null);
-  const [isHeaderLoad, setIsHeaderLoad] = useState<boolean>(false);
   const headerImageRef = useRef<HTMLImageElement | null>(null);
   const backImageRef = useRef<HTMLImageElement | null>(null);
   eventsListRef.current = eventsList;

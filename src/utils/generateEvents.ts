@@ -1,9 +1,10 @@
 import Konva from "konva";
 import { Group } from "konva/lib/Group";
 import { Stage } from "konva/lib/Stage";
-import { Dispatch, RefObject, SetStateAction, useEffect, useRef } from "react";
+import { Dispatch, RefObject, SetStateAction } from "react";
 import { Event } from "../types/event";
 import { makeEditable } from "../utils/makeEditable";
+import { transformTime } from "./transformTime";
 
 export function generateEvents(
   events: Event[],
@@ -28,7 +29,7 @@ export function generateEvents(
         ">  " +
         event.departments
           .map((department) => department.departmentName)
-          .join("&");
+          .join("/");
 
       const title = new Konva.Text({
         x: canvasWidth * 0.05 + titlePaddingLeft,
@@ -47,6 +48,8 @@ export function generateEvents(
         fill: "#C3FD47",
       });
 
+      const time = transformTime(event.gmtEventStart, event.gmtEventEnd);
+      console.log(event);
       const contentText = new Konva.Text({
         x: canvasWidth * 0.05,
         y:
@@ -58,7 +61,7 @@ export function generateEvents(
         fontSize: canvasWidth * 0.045,
         lineHeight: 1.25,
         fontFamily: "noto-sans-sc",
-        text: `⌚ 时间: 7.24 14:30 ~ 16:00 \n🏫 地点: 青柚创新汇\n📚 主题: HTML,JS,CSS 入门`,
+        text: `时间:${time} \n地点: ${event.location.split(" ").pop()}\n主题: ${event.description}`,
         fill: "black",
       });
 
@@ -76,7 +79,7 @@ export function generateEvents(
       StageRef.current?.height(newHeight);
     });
 
-    // 最后加长一点好看
+    // 在生成的 Canvas 最后加长一截
     setHeight(StageRef.current?.height()! + 0.08 * canvasWidth);
     StageRef.current?.height(StageRef.current.height() + 0.08 * canvasWidth);
   });
