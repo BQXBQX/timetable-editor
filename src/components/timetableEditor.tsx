@@ -24,6 +24,8 @@ export const TimetableEditor = () => {
   const [height, setHeight] = useState<Number>(0);
   const totalGroupRef = useRef<Group | null>(null);
   const [isHeaderLoad, setIsHeaderLoad] = useState<boolean>(false);
+  const headerImageRef = useRef<HTMLImageElement | null>(null);
+  const backImageRef = useRef<HTMLImageElement | null>(null);
   eventsListRef.current = eventsList;
 
   useEffect(() => {
@@ -43,32 +45,38 @@ export const TimetableEditor = () => {
       "url(./noto-sans-sc-chinese-simplified-700-normal.woff)",
     );
 
+    headerImageRef.current = new Image();
+    headerImageRef.current.src = "./Header1.png";
+
+    backImageRef.current = new Image();
+    backImageRef.current.src = "./Back.png";
+
     return () => {
       stageRef.current = null;
       layerRef.current = null;
       notoSansSfBold.current = null;
+      headerImageRef.current = null;
+      backImageRef.current = null;
     };
   }, []);
 
   useEffect(() => {
     // 当 height 发生变化时,自动重新渲染 background
-    const backImageObj = new Image();
-    backImageObj.onload = function() {
-      const back = new Konva.Rect({
-        x: 0,
-        y: 0,
-        width: canvasWidth,
-        height: stageRef.current?.height(),
-        fillPatternImage: backImageObj,
-        fillPatternRepeat: "repeat",
-        fillPatternScaleX: 0.05,
-        fillPatternScaleY: 0.05,
-      });
+    console.log("hello");
+    const backImageObj = backImageRef.current!;
+    const back = new Konva.Rect({
+      x: 0,
+      y: 0,
+      width: canvasWidth,
+      height: stageRef.current?.height(),
+      fillPatternImage: backImageObj,
+      fillPatternRepeat: "repeat",
+      fillPatternScaleX: 0.05,
+      fillPatternScaleY: 0.05,
+    });
 
-      totalGroupRef.current && totalGroupRef.current.add(back);
-      back.zIndex(0);
-    };
-    backImageObj.src = "./Back.png";
+    totalGroupRef.current && totalGroupRef.current.add(back);
+    back.zIndex(0);
 
     layerRef.current?.batchDraw();
   }, [height]);
@@ -88,25 +96,23 @@ export const TimetableEditor = () => {
     const headerGroup = new Konva.Group();
     const headerTitleGroup = new Konva.Group();
 
-    const headerImageObj = new Image();
-    headerImageObj.onload = function() {
-      const aspectRatio =
-        headerImageObj.naturalHeight / headerImageObj.naturalWidth;
-      const header = new Konva.Image({
-        x: 0,
-        y: 0,
-        image: headerImageObj,
-        width: canvasWidth,
-        height: canvasWidth * aspectRatio,
-      });
+    const headerImageObj = headerImageRef.current!;
 
-      headerGroup.add(header);
-      setHeight(stageRef.current!.height() + header.height());
-      setIsHeaderLoad(true);
-      stageRef.current?.height(stageRef.current.height() + header.height());
-      header.zIndex(0);
-    };
-    headerImageObj.src = "./Header1.png";
+    const aspectRatio =
+      headerImageObj.naturalHeight / headerImageObj.naturalWidth;
+    const header = new Konva.Image({
+      x: 0,
+      y: 0,
+      image: headerImageObj,
+      width: canvasWidth,
+      height: canvasWidth * aspectRatio,
+    });
+
+    headerGroup.add(header);
+    setHeight(stageRef.current!.height() + header.height());
+    setIsHeaderLoad(true);
+    stageRef.current?.height(stageRef.current.height() + header.height());
+    header.zIndex(0);
 
     const departmentTitle = new Konva.Text({
       x: canvasWidth * 0.05,
