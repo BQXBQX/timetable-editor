@@ -5,9 +5,13 @@ import { Event } from "../types/event";
 interface ToolsBarProps {
   generateClick: () => void;
   setEventsList: Dispatch<SetStateAction<Event[]>>;
+  downloadCanvasAsPNG: () => void;
 }
 
-const ToolsBar: React.FC<ToolsBarProps> = ({ generateClick }) => {
+const ToolsBar: React.FC<ToolsBarProps> = ({
+  generateClick,
+  downloadCanvasAsPNG,
+}) => {
   return (
     <div
       style={{
@@ -42,7 +46,7 @@ const ToolsBar: React.FC<ToolsBarProps> = ({ generateClick }) => {
           ⛰️ Click to generate !!!
         </Button>
         <Button
-          onClick={generateClick}
+          onClick={downloadCanvasAsPNG}
           style={{ width: "fit-content", backgroundColor: "white" }}
           variant="outlined"
         >

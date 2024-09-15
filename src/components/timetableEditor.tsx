@@ -41,7 +41,7 @@ export const TimetableEditor = () => {
 
     notoSansSfBold.current = new FontFace(
       "noto-sans-sc-bold",
-      "url(./noto-sans-sc-chinese-simplified-700-normal.woff)",
+      "url(./noto-sans-sc-chinese-simplified-700-normal.woff)"
     );
 
     headerImageRef.current = new Image();
@@ -143,13 +143,23 @@ export const TimetableEditor = () => {
       stageRef,
       notoSansSfBold,
       canvasWidth,
-      setHeight,
+      setHeight
     );
 
     headerGroup.add(headerTitleGroup);
     totalGroupRef.current.add(headerGroup);
     layerRef.current?.add(totalGroupRef.current, eventsGroup);
     layerRef.current?.batchDraw();
+  }, []);
+
+  const downloadCanvasAsPNG = useCallback(() => {
+    console.log("开始下载");
+    const canvasContainer = document.getElementById("container");
+    const link = document.createElement("a");
+    link.download = "timetable.png";
+    const canvas = canvasContainer?.querySelector("canvas");
+    link.href = canvas?.toDataURL("image/png")!;
+    link.click();
   }, []);
 
   return (
@@ -166,6 +176,7 @@ export const TimetableEditor = () => {
       <MemoToolsBar
         generateClick={generateCanvas}
         setEventsList={setEventsList}
+        downloadCanvasAsPNG={downloadCanvasAsPNG}
       ></MemoToolsBar>
     </div>
   );
