@@ -8,9 +8,9 @@ export const transformTime = (startTime: string, endTime: string): string => {
   const endDay = endDate.getDate();
 
   const startHour = startDate.getHours();
-  const startMinute = startDate.getMinutes();
+  const startMinute = startDate.getMinutes().toString().padStart(2, "0");
   const endHour = endDate.getHours();
-  const endMinute = endDate.getMinutes();
+  const endMinute = endDate.getMinutes().toString().padStart(2, "0");
 
   return startMonth + startDay === endMonth + endDay
     ? ` ${startMonth}.${startDay} ${startHour}:${startMinute} ~ ${endHour}:${endMinute}`

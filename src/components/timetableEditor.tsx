@@ -121,6 +121,7 @@ export const TimetableEditor = () => {
     notoSansSfBold.current
       ?.load()
       .then((loadedFont) => {
+        // @ts-ignore
         document.fonts.add(loadedFont);
 
         const classTitle = new Konva.Text({

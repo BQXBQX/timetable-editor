@@ -11,11 +11,12 @@ export function generateEvents(
   StageRef: RefObject<Stage>,
   titleFontRef: RefObject<FontFace>,
   canvasWidth: number,
-  setHeight: Dispatch<SetStateAction<Number>>,
+  setHeight: Dispatch<SetStateAction<Number>>
 ): Group {
   const eventsGroup = new Konva.Group();
 
   titleFontRef.current?.load().then((loadedFont) => {
+    // @ts-ignore
     document.fonts.add(loadedFont);
 
     const eventsGap = canvasWidth * 0.06;
@@ -49,6 +50,8 @@ export function generateEvents(
       });
 
       const time = transformTime(event.gmtEventStart, event.gmtEventEnd);
+      console.log("活动时间", time);
+
       console.log(event);
       const contentText = new Konva.Text({
         x: canvasWidth * 0.05,
@@ -61,7 +64,9 @@ export function generateEvents(
         fontSize: canvasWidth * 0.045,
         lineHeight: 1.25,
         fontFamily: "noto-sans-sc",
-        text: `时间:${time} \n地点: ${event.location.split(" ").pop()}\n主题: ${event.description}`,
+        text: `时间:${time} \n地点: ${event.location.split(" ").pop()}\n主题: ${
+          event.title
+        }`,
         fill: "black",
       });
 
