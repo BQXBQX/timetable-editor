@@ -64,9 +64,10 @@ export function generateEvents(
         fontSize: canvasWidth * 0.045,
         lineHeight: 1.25,
         fontFamily: "noto-sans-sc",
-        text: `时间:${time} \n地点: ${event.location.split(" ").pop()}\n主题: ${
-          event.title
-        }`,
+        text: `时间:${time} \n地点: ${event.location
+          .split(" ")
+          .slice(-2)
+          .join(" ")}\n主题: ${event.title}`,
         fill: "black",
       });
 
