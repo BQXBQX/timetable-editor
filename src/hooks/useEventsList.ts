@@ -6,7 +6,15 @@ export const useEventsList = () => {
   const [eventsList, setEventsList] = useState<Event[]>([]);
 
   useEffect(() => {
-    getEventsList().then((result) => setEventsList(result));
+    getEventsList().then((result) => {
+      const sortedEvents = result.sort((a: any, b: any) => {
+        return (
+          new Date(a.gmtEventStart).getTime() -
+          new Date(b.gmtEventStart).getTime()
+        );
+      });
+      setEventsList(sortedEvents);
+    });
   }, []);
 
   return { eventsList, setEventsList };
