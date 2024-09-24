@@ -139,6 +139,16 @@ export const TimetableEditor = () => {
       })
       .catch((error) => console.log(error));
 
+    const bottomText = new Konva.Text({
+      x: stageRef.current!.width() - canvasWidth * 0.4,
+      y: stageRef.current!.height() - canvasWidth * 0.05, // 将文本定位在画布底部稍微往上一点的位置
+      fontSize: canvasWidth * 0.02,
+      fontFamily: "noto-sans-sc",
+      text: "-- 由科学技术协会软件研发部前端组制作",
+      fill: "black",
+    });
+    totalGroupRef.current?.add(bottomText);
+
     const eventsGroup = generateEvents(
       eventsListRef.current,
       stageRef,
@@ -151,16 +161,6 @@ export const TimetableEditor = () => {
     totalGroupRef.current.add(headerGroup);
     layerRef.current?.add(totalGroupRef.current, eventsGroup);
 
-    layerRef.current?.batchDraw();
-    const bottomText = new Konva.Text({
-      x: stageRef.current!.width() - canvasWidth * 0.4,
-      y: stageRef.current!.height() - canvasWidth * 0.05, // 将文本定位在画布底部稍微往上一点的位置
-      fontSize: canvasWidth * 0.02,
-      fontFamily: "noto-sans-sc",
-      text: "-- 由科学技术协会软件研发部前端组制作",
-      fill: "black",
-    });
-    totalGroupRef.current?.add(bottomText);
     layerRef.current?.batchDraw();
   }, []);
 
