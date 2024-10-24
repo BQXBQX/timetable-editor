@@ -111,7 +111,7 @@ export const TimetableEditor = () => {
       y: canvasWidth * 0.16,
       fontSize: canvasWidth * 0.1,
       fontFamily: "noto-sans-sc",
-      text: "软研",
+      text: "SAST",
       fill: "black",
     });
 
