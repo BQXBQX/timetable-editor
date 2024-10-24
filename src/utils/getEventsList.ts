@@ -4,7 +4,7 @@ const baseURL = "https://evento.sast.fun/api";
 
 export const getEventsList = async () => {
   try {
-    const response = await fetch(`${baseURL}/event/list?size=7`);
+    const response = await fetch(`${baseURL}/event/list`);
     // 检查响应是否成功
     if (!response.ok) {
       throw new Error(`HTTP 错误! 状态: ${response.status}`);
